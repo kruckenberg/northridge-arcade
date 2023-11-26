@@ -2,7 +2,7 @@ import turtle
 
 
 def play_pong():
-    # globals
+    # screen globals
     screen_padding = 20 * 2
     screen_width = 1200
     right_edge = screen_width / 2
@@ -14,10 +14,15 @@ def play_pong():
 
     midpoint = 0
 
+    # ball globals
     ball_x_speed = 0.15
     ball_x_direction = 1
     ball_y_speed = 0.15
     ball_y_direction = 1
+
+    # score
+    score_left = 0
+    score_right = 0
 
     # screen
     screen = turtle.Screen()
@@ -56,6 +61,25 @@ def play_pong():
     def move_ball():
         ball.setx(ball.xcor() + (ball_x_speed * ball_x_direction))
         ball.sety(ball.ycor() + (ball_y_speed * ball_y_direction))
+
+    # paddle movement
+    def move_l_paddle_up():
+        l_paddle.sety(l_paddle.ycor() + 20)
+
+    def move_l_paddle_down():
+        l_paddle.sety(l_paddle.ycor() - 20)
+
+    def move_r_paddle_up():
+        r_paddle.sety(r_paddle.ycor() + 20)
+
+    def move_r_paddle_down():
+        r_paddle.sety(r_paddle.ycor() - 20)
+
+    screen.listen()
+    screen.onkeypress(move_l_paddle_up, "w")
+    screen.onkeypress(move_l_paddle_down, "s")
+    screen.onkeypress(move_r_paddle_up, "Up")
+    screen.onkeypress(move_r_paddle_down, "Down")
 
     # main game loop
     while True:
