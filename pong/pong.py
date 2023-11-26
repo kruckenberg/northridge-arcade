@@ -14,6 +14,11 @@ def play_pong():
 
     midpoint = 0
 
+    ball_x_speed = 0.15
+    ball_x_direction = 1
+    ball_y_speed = 0.15
+    ball_y_direction = 1
+
     # screen
     screen = turtle.Screen()
     screen.title("Knight's Pong")
@@ -41,9 +46,22 @@ def play_pong():
     r_paddle.color("white")
     r_paddle.goto(right_edge, midpoint)  # set paddle's starting position
 
+    # ball
+    ball = turtle.Turtle()
+    ball.penup()  # don't draw ball's path
+    ball.speed(0)  # manually control ball's movement
+    ball.shape("circle")
+    ball.color("white")
+
+    def move_ball():
+        ball.setx(ball.xcor() + (ball_x_speed * ball_x_direction))
+        ball.sety(ball.ycor() + (ball_y_speed * ball_y_direction))
+
     # main game loop
     while True:
         screen.update()
+
+        move_ball()
 
 
 if __name__ == "__main__":
