@@ -33,6 +33,13 @@ def play_pong():
     )
     screen.tracer(0)  # manually control screen updates with main game loop
 
+    # scoreboard
+    scoreboard = turtle.Turtle()
+    scoreboard.speed(0)
+    scoreboard.color("white")
+    scoreboard.penup()
+    scoreboard.goto(0, top_edge - 50)
+
     # left paddle
     l_paddle = turtle.Turtle()
     l_paddle.penup()  # don't draw paddle's path
@@ -82,6 +89,14 @@ def play_pong():
 
     def move_r_paddle_down():
         r_paddle.sety(r_paddle.ycor() - 20)
+
+    def update_scoreboard():
+        scoreboard.clear()
+        scoreboard.write(
+            f"{score_left} - {score_right}",
+            align="center",
+            font=("Courier", 24, "bold"),
+        )
 
     screen.listen()
     screen.onkeypress(move_l_paddle_up, "w")
@@ -135,13 +150,18 @@ def play_pong():
             nonlocal score_right
             score_right += 1
             change_ball_x_direction()
+            update_scoreboard()
             ball.goto(midpoint, midpoint)
 
         if ball_x_position > right_edge:
             nonlocal score_left
             score_left += 1
+            update_scoreboard()
             change_ball_x_direction()
             ball.goto(midpoint, midpoint)
+
+    # initialize scoreboard
+    update_scoreboard()
 
     # main game loop
     while True:
